@@ -16,8 +16,7 @@ const RecipeCards = (props) => {
     const [totalPages, setTotalPages] = useState(0);
 
 
-
-    let url = `http://localhost:8080/api/v1/recipes/findAll?category=${props.category}&type=${props.type}&page=${currentPage-1}&size=${itemsPerPage}`+urlAddon;
+    let url = `http://localhost:8080/api/v1/recipes/findAll?category=${props.category}&type=${props.type}&page=${currentPage - 1}&size=${itemsPerPage}` + urlAddon;
     useEffect(() => {
         fetch(url)
             .then(res => {
@@ -32,7 +31,7 @@ const RecipeCards = (props) => {
     }, [url, currentPage]);
 
     function handleSearch() {
-        if(value !== "") {
+        if (value !== "") {
             let text = `${value}`;
             let trimmedText = text.trim();
             setUrlAddon(`&text=${trimmedText}`);
@@ -40,7 +39,7 @@ const RecipeCards = (props) => {
     }
 
     function handleKeyPress(event) {
-        if(value !== "" && event.key === 'Enter') {
+        if (value !== "" && event.key === 'Enter') {
             handleSearch();
             setValue("");
         }
@@ -67,17 +66,17 @@ const RecipeCards = (props) => {
                     {recipes.map((item) => {
                         return (
                             <>
-                            <
-                                RecipeCard id={item.recipeId}
-                                           rating={item.rating}
-                                           title={item.title}
-                                           description={item.description}
-                                           prepareTime={item.prepareTime}
-                                           cookingTime={item.cookingTime}
-                                           imagePath={item.imgMedium}
-                                           category={item.category}
-                                           type={item.type}
-                            />
+                                <
+                                    RecipeCard id={item.recipeId}
+                                               rating={item.rating}
+                                               title={item.title}
+                                               description={item.description}
+                                               prepareTime={item.prepareTime}
+                                               cookingTime={item.cookingTime}
+                                               imagePath={item.imgMedium}
+                                               category={item.category}
+                                               type={item.type}
+                                />
                             </>
 
                         )

@@ -86,7 +86,7 @@ html {
     }
 
     .top-navbar {
-        background-color: rgb(255, 186, 84);
+        background-color: #FFAF30;
         width: 100%;
         height: 80px;
         font-family: 'Inter', sans-serif;
@@ -621,7 +621,7 @@ html {
     height: 60px;
     border: none;
     border-radius: 30px;
-    background-color: rgb(255, 186, 84);
+    background-color: #FFAF30;
     font-family: 'Inter', sans-serif;
     font-size: 1.8rem;
     font-weight: 600;
@@ -721,6 +721,37 @@ html {
 .empty-field-message {
     color: red;
     font-size: 16px;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+    background: #FFAF30;
+    border: #EFEFEF;
+}
+
+.rating-span {
+    letter-spacing: -1px;
+    font-family: 'Antonio', sans-serif;
+    font-size: 55px;
+    font-weight: 700;
+}
+
+.main-large-orange-post-button {
+    display: inline-flex;
+    width: 150px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    background-color: #343434;
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #FFF;
+    margin-top: 40px;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
 }
 
 

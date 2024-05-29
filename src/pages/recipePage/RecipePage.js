@@ -1,12 +1,17 @@
 import {Navbar} from "../../components/Navbar";
-import {FaArrowCircleLeft} from "react-icons/fa";
+import {FaArrowCircleLeft, FaStar} from "react-icons/fa";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import {getToken, isUserLoggedIn} from "../../service/AuthService";
+import {RatingBlock} from "../../components/RatingBlock";
+import {SetRating} from "../../components/SetRating";
+import {LeaveComment} from "../../components/LeaveComment";
+import {RecipeReview} from "../../components/RecipeReview";
 
 
 const RecipePage = () => {
-    window.scrollTo(0, 0);
+
+    //window.scrollTo(0, 0);
 
     let navigator = useNavigate();
     let location = useLocation();
@@ -19,14 +24,39 @@ const RecipePage = () => {
     const type = path.split("/")[3];
 
     const [recipe, setRecipe] = useState(null)
+    const [rating, setRating] = useState('');
+    const [newRating, setNewRating] = useState('');
 
     function handleClick() {
         navigator(`/recipes/${category}/${type}`)
     }
 
+    function handleRating(value) {
+        setRating(value);
+    }
+
+    function handleNewRating(event) {
+        setNewRating(event.target.id)
+    }
+
+    const updateRating = async () => {
+        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/rating?value=${newRating}`
+        const requestOptions = {
+            method: 'PUT',
+            mode: 'cors'
+        };
+        await fetch(url, requestOptions);
+        handleRating(newRating);
+    }
+
+    useEffect(() => {
+        updateRating();
+    }, [newRating]);
+
+
     useEffect(() => {
         fetchRecipe();
-    }, []);
+    }, [rating]);
 
     const fetchRecipe = async () => {
         const url = `http://localhost:8080/api/v1/recipes/${recipeId}`;
@@ -69,11 +99,15 @@ const RecipePage = () => {
 
                 <div className="container main-recipe-container">
                     <div className="row">
-                        <div className="col-4 ingredients-container">
+                        <div className="col-4 ingredients-container"
+                             style={{paddingLeft: '50px', paddingRight: '50px'}}>
+                            <RatingBlock rating={recipe?.rating}/>
+                            <br/><br/>
+
                             <span className="description-title">Ingredients:</span>
                             <ul className="ingredients-list">
                                 {recipe?.ingredients?.sort((a, b) => a.name.localeCompare(b.name)).map(ingredient => (
-                                    <li key={ingredient.ingredientId}>{ingredient.name} - {ingredient.value} {ingredient.units}</li>
+                                    <li key={ingredient.ingredientId}>{ingredient.name}</li>
                                 ))}
                             </ul>
                             <br/>
@@ -82,7 +116,7 @@ const RecipePage = () => {
                             <span className="description-title">Nutrients:</span>
                             <ul className="ingredients-list">
                                 {recipe?.nutrients?.sort((a, b) => a.name.localeCompare(b.name)).map(nutrient => (
-                                    <li key={nutrient.nutrientId}>{nutrient.name} - {nutrient.value} {nutrient.units}</li>
+                                    <li key={nutrient.nutrientId}>{nutrient.name}</li>
                                 ))}
                             </ul>
 
@@ -168,17 +202,45 @@ const RecipePage = () => {
                                             <li key={step.stepId} className="mb-4">{step.description}</li>
                                         ))}
                                     </ol>
+
+
+                                    <br/>
+                                    <hr/>
+                                    <br/>
+                                    <SetRating onClick={handleNewRating} newRating={newRating}/>
+                                    <br/>
+                                    <hr/>
+                                    <br/>
+                                    <div className="row mb-4">
+                                        <div className="col-12">
+                                                <span className="card-title mb-auto mt-auto"
+                                                      style={{fontSize: '30px'}}>Explore related reviews</span>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <RecipeReview
+                                        text={'Aiquip ex ea commodo consequat.\n' +
+                                            '                                                            Duis aute irure dolor in reprehenderit in voluptate velit\n' +
+                                            '                                                            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n' +
+                                            '                                                            occaecat cupidatat non proident, sunt in culpa qui officia\n' +
+                                            '                                                            deserunt mollit anim id est laborum.'}/>
+                                    <RecipeReview text={'Ut enim ad minim veniam, quis nostrud exercitation\n' +
+                                        '                                                            deserunt mollit anim id est laborum.'}/>
+                                    <RecipeReview
+                                        text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\n' +
+                                            '                                                            occaecat cupidatat non proident, sunt in culpa qui officia\n' +
+                                            '                                                            deserunt mollit anim id est laborum.'}/>
+
+                                    <br/>
+                                    <hr/>
+                                    <br/>
+                                    <LeaveComment/>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div className="row mt-5 ">
-
-
-
-
-
-
 
                         {isAuth &&
                             <>
@@ -195,7 +257,6 @@ const RecipePage = () => {
                                 </div>
                             </>
                         }
-
                     </div>
                 </div>
             </section>
