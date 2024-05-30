@@ -1,10 +1,11 @@
-import {FaStar} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import {StarEmptyLight} from "../star-light/StarEmptyLight";
+import {StarQuarterLight} from "../star-light/StarQuarterLight";
+import {StarHalfLight} from "../star-light/StarHalfLight";
+import {StarThreeQuartersLight} from "../star-light/StarThreeQuartersLight";
+import {StarFilledLight} from "../star-light/StarFilledLight";
 
 const RecipeCard = (props) => {
-
-    const style = {color: "#FFBA54"}
-    const styleGray = {color: "#CBCBCB"}
 
     let navigate = useNavigate();
 
@@ -13,33 +14,49 @@ const RecipeCard = (props) => {
     }
 
     function handleRating(value) {
-        value= value.toString();
-        if (value === '1') {
-            return (<div><FaStar size={27} style={style}/><FaStar size={27} style={styleGray}/>
-                <FaStar size={27} style={styleGray}/><FaStar size={27} style={styleGray}/><FaStar size={27}
-                                                                                                  style={styleGray}/>
-            </div>)
-        } else if (value === '2') {
-            return (<div><FaStar size={27} style={style}/><FaStar size={27} style={style}/>
-                <FaStar size={27} style={styleGray}/><FaStar size={27} style={styleGray}/><FaStar size={27}
-                                                                                                  style={styleGray}/>
-            </div>)
-        } else if (value === '3') {
-            return (<div><FaStar size={27} style={style}/><FaStar size={27} style={style}/>
-                <FaStar size={27} style={style}/><FaStar size={27} style={styleGray}/><FaStar size={27}
-                                                                                              style={styleGray}/></div>)
-        } else if (value === '4') {
-            return (<div><FaStar size={27} style={style}/><FaStar size={27} style={style}/>
-                <FaStar size={27} style={style}/><FaStar size={27} style={style}/><FaStar size={27} style={styleGray}/>
-            </div>)
-        } else if (value === '5') {
-            return (<div><FaStar size={27} style={style}/><FaStar size={27} style={style}/>
-                <FaStar size={27} style={style}/><FaStar size={27} style={style}/><FaStar size={27} style={style}/>
-            </div>)
+        //value= value?.toString();
+        if (value < 0.25) {
+            return (<div><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 0.5) {
+            return (<div><StarQuarterLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 0.75) {
+            return (<div><StarHalfLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 1.0) {
+            return (<div><StarThreeQuartersLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 1.25) {
+            return (<div><StarFilledLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 1.5) {
+            return (<div><StarFilledLight /><StarQuarterLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 1.75) {
+            return (<div><StarFilledLight /><StarHalfLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 2.0) {
+            return (<div><StarFilledLight /><StarThreeQuartersLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 2.25) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 2.5) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarQuarterLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 2.75) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarHalfLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 3.0) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarThreeQuartersLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 3.25) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarEmptyLight /><StarEmptyLight /></div>)
+        } else if (value < 3.5) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarQuarterLight /><StarEmptyLight /></div>)
+        } else if (value < 3.75) {
+            return (<div className="d-inline-flex"><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarHalfLight /><StarEmptyLight /></div>)
+        } else if (value < 4.0) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarThreeQuartersLight /><StarEmptyLight /></div>)
+        } else if (value < 4.25) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarEmptyLight /></div>)
+        } else if (value < 4.5) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarQuarterLight /></div>)
+        } else if (value < 4.75) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarHalfLight /></div>)
+        } else if (value < 5.0) {
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarThreeQuartersLight /></div>)
         } else {
-            return (<div><FaStar size={27} style={styleGray}/><FaStar size={27} style={styleGray}/><FaStar size={27}
-                                                                                                           style={styleGray}/>
-                <FaStar size={27} style={styleGray}/><FaStar size={27} style={styleGray}/></div>)
+            return (<div><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /><StarFilledLight /></div>)
         }
     }
 

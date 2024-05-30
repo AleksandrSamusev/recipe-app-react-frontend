@@ -140,8 +140,6 @@ const CreateRecipePage = () => {
 
     function handleRecipeSubmit() {
 
-        console.log(mediumImage)
-
         if (recipeTitle.trim() === "" || ingredients.length === 0 || nutrients.length === 0
             || prepareTime.trim() === "" || cookingTime.trim() === "" || description.trim() === ""
             || steps.length === 0 || category === "" || type === "" || mediumImage === null

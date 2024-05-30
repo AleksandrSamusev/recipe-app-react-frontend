@@ -13,13 +13,13 @@ const RecipeReview = (props) => {
                         }}>
                             <div className="col-6 text-start">
                                                         <span className="mb-auto mt-auto"
-                                                              style={{color: 'white', fontSize: '18px'}}>December 12, 2024 at 9:47 pm</span>
+                                                              style={{color: 'white', fontSize: '18px'}}>{props.date}</span>
                             </div>
                             <div className="col-6 text-end" style={{paddingRight: '30px'}}>
                                                         <span className="mt-auto mb-auto" style={{
                                                             color: 'white',
                                                             fontSize: '18px'
-                                                        }}>Anonymous user</span>
+                                                        }}>{props.author}</span>
                             </div>
                         </div>
                         <div className="row shadow-lg" style={{

@@ -76,7 +76,7 @@ html {
     }
 
     .main-large-orange-button:hover {
-        background-color: #FFAF30;
+        background-color: #FFBA54;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
@@ -86,7 +86,7 @@ html {
     }
 
     .top-navbar {
-        background-color: #FFAF30;
+        background-color: #FFBA54;
         width: 100%;
         height: 80px;
         font-family: 'Inter', sans-serif;
@@ -159,7 +159,7 @@ html {
 
     .card-image {
         border-radius: 10px;
-        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4), 0 20px 40px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4), 0 10px 30px 0 rgba(0, 0, 0, 0.3);
     }
 
     .card-image:hover {
@@ -621,7 +621,7 @@ html {
     height: 60px;
     border: none;
     border-radius: 30px;
-    background-color: #FFAF30;
+    background-color: #FFBA54;
     font-family: 'Inter', sans-serif;
     font-size: 1.8rem;
     font-weight: 600;
@@ -669,7 +669,7 @@ html {
 .orange-circle {
     width: 50px;
     height: 50px;
-    background-color: #FFAF30;
+    background-color: #FFBA54;
     border-radius: 25px;
     display: inline-block;
 }
@@ -725,7 +725,7 @@ html {
 
 .page-item.active .page-link {
     color: #fff;
-    background: #FFAF30;
+    background: #FFBA54;
     border: #EFEFEF;
 }
 

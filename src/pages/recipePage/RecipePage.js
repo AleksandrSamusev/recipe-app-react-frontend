@@ -1,5 +1,5 @@
 import {Navbar} from "../../components/Navbar";
-import {FaArrowCircleLeft, FaStar} from "react-icons/fa";
+import {FaArrowCircleLeft} from "react-icons/fa";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import {getToken, isUserLoggedIn} from "../../service/AuthService";
@@ -8,24 +8,54 @@ import {SetRating} from "../../components/SetRating";
 import {LeaveComment} from "../../components/LeaveComment";
 import {RecipeReview} from "../../components/RecipeReview";
 
-
 const RecipePage = () => {
 
     //window.scrollTo(0, 0);
-
     let navigator = useNavigate();
     let location = useLocation();
     const isAuth = isUserLoggedIn();
-
     const path = location.pathname;
-
     const recipeId = path.split("/")[5];
     const category = path.split("/")[2];
     const type = path.split("/")[3];
-
     const [recipe, setRecipe] = useState(null)
     const [rating, setRating] = useState('');
     const [newRating, setNewRating] = useState('');
+    const [comment, setComment] = useState(null);
+
+
+    let newComment = {
+        comment: "",
+        author: "Guest user",
+        date: ""
+    }
+
+    function handleComment(event) {
+        newComment.comment = event.target.value;
+    }
+
+    function handlePostComment() {
+        let currentDate = new Date();
+        newComment.date = `${currentDate.getMonth() + 1} ${currentDate.getDate()}, ${currentDate.getFullYear()} at ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        setComment(newComment);
+    }
+
+    const sendNewComment = async () => {
+        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/comment`
+        const requestOptions = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(comment)
+        };
+        await fetch(url, requestOptions)
+            .then((rating) => setRating(rating))
+            .catch(error => {
+                console.error(error)
+            });
+    }
 
     function handleClick() {
         navigator(`/recipes/${category}/${type}`)
@@ -49,15 +79,6 @@ const RecipePage = () => {
         handleRating(newRating);
     }
 
-    useEffect(() => {
-        updateRating();
-    }, [newRating]);
-
-
-    useEffect(() => {
-        fetchRecipe();
-    }, [rating]);
-
     const fetchRecipe = async () => {
         const url = `http://localhost:8080/api/v1/recipes/${recipeId}`;
         const response = await fetch(url);
@@ -70,13 +91,11 @@ const RecipePage = () => {
 
     const handleDelete = async () => {
         const url = `http://localhost:8080/api/v1/recipes/${recipeId}`
-
         const requestOptions = {
             method: 'DELETE',
             mode: 'cors',
             headers: {'Authorization': getToken()}
         };
-
         await fetch(url, requestOptions)
             .then((response) => response.json())
             .then(data => console.log(data))
@@ -86,6 +105,20 @@ const RecipePage = () => {
         alert('Recipe deleted successfully')
         navigator("/dishes");
     }
+
+
+    useEffect(() => {
+        updateRating();
+    }, [newRating]);
+
+
+    useEffect(() => {
+        fetchRecipe();
+    }, [rating]);
+
+    useEffect(() => {
+        sendNewComment();
+    }, [comment]);
 
     return (
         <>
@@ -218,23 +251,19 @@ const RecipePage = () => {
                                         </div>
                                     </div>
                                     <br/>
-                                    <RecipeReview
-                                        text={'Aiquip ex ea commodo consequat.\n' +
-                                            '                                                            Duis aute irure dolor in reprehenderit in voluptate velit\n' +
-                                            '                                                            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n' +
-                                            '                                                            occaecat cupidatat non proident, sunt in culpa qui officia\n' +
-                                            '                                                            deserunt mollit anim id est laborum.'}/>
-                                    <RecipeReview text={'Ut enim ad minim veniam, quis nostrud exercitation\n' +
-                                        '                                                            deserunt mollit anim id est laborum.'}/>
-                                    <RecipeReview
-                                        text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\n' +
-                                            '                                                            occaecat cupidatat non proident, sunt in culpa qui officia\n' +
-                                            '                                                            deserunt mollit anim id est laborum.'}/>
-
+                                    {recipe?.comments &&
+                                        recipe.comments.map(comment => (
+                                            <RecipeReview
+                                                key={comment.id}
+                                                date={comment.date}
+                                                text={comment.comment}
+                                                author={comment.author}/>
+                                        ))
+                                    }
                                     <br/>
                                     <hr/>
                                     <br/>
-                                    <LeaveComment/>
+                                    <LeaveComment onChange={handleComment} onClick={handlePostComment}/>
                                 </div>
                             </div>
                         </div>

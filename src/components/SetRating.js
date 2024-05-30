@@ -4,7 +4,7 @@ import {useState} from "react";
 const SetRating = (props) => {
 
     const styleGray = {color: "#CBCBCB", pointerEvents: 'none'}
-    const styleGold = {color: "#FFAF30", pointerEvents: 'none'}
+    const styleGold = {color: "#FFBA54", pointerEvents: 'none'}
     const [isFirstHovered, setFirstHovered] = useState(false);
     const [isSecondHovered, setSecondHovered] = useState(false);
     const [isThirdHovered, setThirdHovered] = useState(false);
@@ -91,9 +91,8 @@ const SetRating = (props) => {
                         color: '#373737',
                         padding: '10px',
                         marginLeft: '20px',
-                        backgroundColor: '#FFAF30',
+                        backgroundColor: '#FFBA54',
                         borderRadius: '5px'
-
                     }}>Thank you for your Rate!</span>
                 }
             </div>

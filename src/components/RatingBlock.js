@@ -1,4 +1,9 @@
 import {FaStar} from "react-icons/fa";
+import {StarQuarterDark} from "./StarQuarterDark";
+import {StarEmptyDark} from "./StarEmptyDark";
+import {StarHalfDark} from "./StarHalfDark";
+import {StarThreeQuartersDark} from "./StarThreeQuartersDark";
+import {StarFilledDark} from "./StarFilledDark";
 
 const RatingBlock = (props) => {
 
@@ -9,37 +14,49 @@ const RatingBlock = (props) => {
 
 
     function handleRating(value) {
-        value= value?.toString();
-        if (value === '1') {
-            return (<div><FaStar size={35} style={style}/><FaStar size={35} style={styleGray}/>
-                <FaStar size={35} style={styleGray}/><FaStar size={35} style={styleGray}/><FaStar size={35}
-                                                                                                  style={styleGray}/>
-            </div>)
-        } else if (value === '2') {
-
-            return (<div><FaStar size={35} style={style}/><FaStar size={35} style={style}/>
-                <FaStar size={35} style={styleGray}/><FaStar size={35} style={styleGray}/><FaStar size={35}
-                                                                                                  style={styleGray}/>
-            </div>)
-        } else if (value === '3') {
-
-            return (<div><FaStar size={35} style={style}/><FaStar size={35} style={style}/>
-                <FaStar size={35} style={style}/><FaStar size={35} style={styleGray}/><FaStar size={35}
-                                                                                              style={styleGray}/></div>)
-        } else if (value === '4') {
-
-            return (<div><FaStar size={35} style={style}/><FaStar size={35} style={style}/>
-                <FaStar size={35} style={style}/><FaStar size={35} style={style}/><FaStar size={35} style={styleGray}/>
-            </div>)
-        } else if (value === '5') {
-
-            return (<div><FaStar size={35} style={style}/><FaStar size={35} style={style}/>
-                <FaStar size={35} style={style}/><FaStar size={35} style={style}/><FaStar size={35} style={style}/>
-            </div>)
+        //value= value?.toString();
+        if (value < 0.25) {
+            return (<div><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 0.5) {
+            return (<div><StarQuarterDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 0.75) {
+            return (<div><StarHalfDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 1.0) {
+            return (<div><StarThreeQuartersDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 1.25) {
+            return (<div><StarFilledDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 1.5) {
+            return (<div><StarFilledDark /><StarQuarterDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 1.75) {
+            return (<div><StarFilledDark /><StarHalfDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 2.0) {
+            return (<div><StarFilledDark /><StarThreeQuartersDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 2.25) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 2.5) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarQuarterDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 2.75) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarHalfDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 3.0) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarThreeQuartersDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 3.25) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarEmptyDark /><StarEmptyDark /></div>)
+        } else if (value < 3.5) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarQuarterDark /><StarEmptyDark /></div>)
+        } else if (value < 3.75) {
+            return (<div className="d-inline-flex"><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarHalfDark /><StarEmptyDark /></div>)
+        } else if (value < 4.0) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarThreeQuartersDark /><StarEmptyDark /></div>)
+        } else if (value < 4.25) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarEmptyDark /></div>)
+        } else if (value < 4.5) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarQuarterDark /></div>)
+        } else if (value < 4.75) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarHalfDark /></div>)
+        } else if (value < 5.0) {
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarThreeQuartersDark /></div>)
         } else {
-            return (<div><FaStar size={35} style={styleGray}/><FaStar size={35} style={styleGray}/><FaStar size={35}
-                                                                                                           style={styleGray}/>
-                <FaStar size={35} style={styleGray}/><FaStar size={35} style={styleGray}/></div>)
+            return (<div><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /><StarFilledDark /></div>)
         }
     }
 
@@ -58,7 +75,7 @@ const RatingBlock = (props) => {
                 </div>
             </div>
             <div className="col-3 d-flex justify-content-start align-items-center">
-                <span className="rating-span" style={{color: '#EFEFEF'}}>{rat}.0</span>
+                <span className="rating-span" style={{color: '#EFEFEF'}}>{rat}</span>
             </div>
         </div>
     )
