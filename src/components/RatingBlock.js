@@ -9,12 +9,7 @@ const RatingBlock = (props) => {
 
     const rat = props.rating;
 
-    const style = {color: "#FFBA54"}
-    const styleGray = {color: "#CBCBCB"}
-
-
     function handleRating(value) {
-        //value= value?.toString();
         if (value < 0.25) {
             return (<div><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /><StarEmptyDark /></div>)
         } else if (value < 0.5) {

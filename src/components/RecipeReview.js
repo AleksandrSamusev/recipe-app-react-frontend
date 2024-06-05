@@ -2,40 +2,33 @@ const RecipeReview = (props) => {
 
     return (
         <>
-
             <div className="container">
                 <div className="row">
-                    <div className="col-10 offset-2">
-                        <div className="row p-2" style={{
-                                backgroundColor: '#343434',
-                            borderTopLeftRadius: '8px',
-                            borderTopRightRadius: '8px'
-                        }}>
-                            <div className="col-6 text-start">
+                    <div className="offset-1 col-10">
+                        <div className="row p-2">
+                            <div className="col-12 text-start mb-3">
                                                         <span className="mb-auto mt-auto"
-                                                              style={{color: 'white', fontSize: '18px'}}>{props.date}</span>
+                                                              style={{
+                                                                  fontSize: '16px',
+                                                                  fontWeight: '500',
+                                                                  fontFamily: 'Roboto',
+                                                                  color: 'firebrick'
+                                                              }}>{props.author} - {props.date}</span>
                             </div>
-                            <div className="col-6 text-end" style={{paddingRight: '30px'}}>
-                                                        <span className="mt-auto mb-auto" style={{
-                                                            color: 'white',
-                                                            fontSize: '18px'
-                                                        }}>{props.author}</span>
-                            </div>
-                        </div>
-                        <div className="row shadow-lg" style={{
-                            backgroundColor: 'white',
-                            borderBottomLeftRadius: '10px',
-                            borderBottomRightRadius: '10px',
-                            paddingBottom: '10px'
-                        }}>
-                            <div className="col-10 offset-2 p-4" style={{backgroundColor: 'white', borderBottomRightRadius: '10px'}}>
-                                                        <span style={{fontSize: '18px'}}>{props.text}</span>
+                            <div className="col-12 text-start mb-2">
+                                <span
+                                    style={{
+                                        fontSize: '18px',
+                                        fontWeight: '500',
+                                        fontFamily: 'Roboto',
+                                        fontStyle: 'italic'
+                                    }}>{props.text}</span>
                             </div>
                         </div>
+                        <hr/>
                     </div>
                 </div>
             </div>
-            <br/>
             <br/>
         </>
     )

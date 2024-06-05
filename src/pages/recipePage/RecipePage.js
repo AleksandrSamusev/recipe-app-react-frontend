@@ -2,82 +2,76 @@ import {Navbar} from "../../components/Navbar";
 import {FaArrowCircleLeft} from "react-icons/fa";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
-import {getToken, isUserLoggedIn} from "../../service/AuthService";
+import {getLoggedInUser, getToken, isUserLoggedIn} from "../../service/AuthService";
 import {RatingBlock} from "../../components/RatingBlock";
 import {SetRating} from "../../components/SetRating";
 import {LeaveComment} from "../../components/LeaveComment";
-import {RecipeReview} from "../../components/RecipeReview";
+import {Comments} from "../../components/Comments";
 
 const RecipePage = () => {
 
-    //window.scrollTo(0, 0);
-    let navigator = useNavigate();
-    let location = useLocation();
+
+    const navigator = useNavigate();
+    const location = useLocation();
     const isAuth = isUserLoggedIn();
     const path = location.pathname;
     const recipeId = path.split("/")[5];
     const category = path.split("/")[2];
     const type = path.split("/")[3];
+
     const [recipe, setRecipe] = useState(null)
-    const [rating, setRating] = useState('');
     const [newRating, setNewRating] = useState('');
-    const [comment, setComment] = useState(null);
+    const [commentText, setCommentText] = useState('');
 
-
-    let newComment = {
-        comment: "",
-        author: "Guest user",
-        date: ""
+    function handleClick() {
+        navigator(`/recipes/${category}/${type}`)
     }
 
-    function handleComment(event) {
-        newComment.comment = event.target.value;
+    function handleCommentChange(event) {
+        setCommentText(event.target.value)
     }
 
-    function handlePostComment() {
-        let currentDate = new Date();
-        newComment.date = `${currentDate.getMonth() + 1} ${currentDate.getDate()}, ${currentDate.getFullYear()} at ${currentDate.getHours()}:${currentDate.getMinutes()}`;
-        setComment(newComment);
-    }
-
-    const sendNewComment = async () => {
-        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/comment`
+    const sendNewCommentRequest = async () => {
+        window.scrollTo(0,0)
+        const newCommentRequest = {
+            comment: commentText.trim(),
+            author: isUserLoggedIn() ? getLoggedInUser() : 'guest'
+        }
+        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/comment`;
         const requestOptions = {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(comment)
+            body: JSON.stringify(newCommentRequest)
         };
-        await fetch(url, requestOptions)
-            .then((rating) => setRating(rating))
-            .catch(error => {
-                console.error(error)
-            });
+
+        const response = await fetch(url, requestOptions);
+        const newComment = await response.json();
+        const currentComments = recipe.comments;
+        currentComments.push(newComment);
+        setCommentText('');
+        setRecipe(prevState => ({
+            ...prevState, comments: currentComments
+        }));
+
     }
 
-    function handleClick() {
-        navigator(`/recipes/${category}/${type}`)
-    }
-
-    function handleRating(value) {
-        setRating(value);
-    }
-
-    function handleNewRating(event) {
-        setNewRating(event.target.id)
-    }
-
-    const updateRating = async () => {
-        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/rating?value=${newRating}`
+    const updateRating = async (event) => {
+        const url = `http://localhost:8080/api/v1/recipes/${recipeId}/rating?value=${event.target.id}`
         const requestOptions = {
             method: 'PUT',
             mode: 'cors'
         };
-        await fetch(url, requestOptions);
-        handleRating(newRating);
+        const resp = await fetch(url, requestOptions);
+        const data = await resp.json();
+        setRecipe(prevState => ({
+            ...prevState, rating: data
+        }))
+        setNewRating(data)
     }
+
 
     const fetchRecipe = async () => {
         const url = `http://localhost:8080/api/v1/recipes/${recipeId}`;
@@ -106,31 +100,39 @@ const RecipePage = () => {
         navigator("/dishes");
     }
 
-
-    useEffect(() => {
-        updateRating();
-    }, [newRating]);
-
-
     useEffect(() => {
         fetchRecipe();
-    }, [rating]);
+    }, []);
 
-    useEffect(() => {
-        sendNewComment();
-    }, [comment]);
+
+
 
     return (
         <>
             <section className="main-page-section">
                 <Navbar/>
                 <FaArrowCircleLeft size={42} className="arrow-left" onClick={handleClick}/>
-                <p className="recipe-title">{recipe?.title}</p>
-                <br/>
-                <br/>
-                <br/>
+
 
                 <div className="container main-recipe-container">
+                    <br/>
+                    <div className="row mt-5 mb-5">
+                        <div className="col-8 offset-2 recipe-title">
+                            <p className="mt-auto mb-auto">{recipe?.title}</p>
+                        </div>
+                        <div className="col-2 d-flex justify-content-center">
+                            {isAuth &&
+                                <>
+                                    <button className="main-large-orange-save-button mb-auto mt-auto"
+                                            style={{color: 'black', backgroundColor: '#FFBA54'}}
+                                            onClick={handleDelete}>Delete
+                                    </button>
+                                </>
+                            }
+                        </div>
+                    </div>
+                    <br/><br/>
+
                     <div className="row">
                         <div className="col-4 ingredients-container"
                              style={{paddingLeft: '50px', paddingRight: '50px'}}>
@@ -240,7 +242,7 @@ const RecipePage = () => {
                                     <br/>
                                     <hr/>
                                     <br/>
-                                    <SetRating onClick={handleNewRating} newRating={newRating}/>
+                                    <SetRating onClick={updateRating} newRating={newRating}/>
                                     <br/>
                                     <hr/>
                                     <br/>
@@ -251,41 +253,30 @@ const RecipePage = () => {
                                         </div>
                                     </div>
                                     <br/>
-                                    {recipe?.comments &&
-                                        recipe.comments.map(comment => (
-                                            <RecipeReview
-                                                key={comment.id}
-                                                date={comment.date}
-                                                text={comment.comment}
-                                                author={comment.author}/>
-                                        ))
+                                    {recipe?.comments.length > 0 ?
+                                        <Comments recipe={recipe}
+                                                  recipeId={recipeId}
+                                        />
+                                        :
+                                        <div className="text-center">
+                                            <span style={{
+                                                fontSize: '16px',
+                                                fontWeight: '500',
+                                                fontFamily: 'Roboto'
+                                            }}>There is no comments for this recipe</span>
+                                        </div>
+
                                     }
-                                    <br/>
-                                    <hr/>
-                                    <br/>
-                                    <LeaveComment onChange={handleComment} onClick={handlePostComment}/>
+
+                                    <LeaveComment
+                                        onChange={handleCommentChange}
+                                        onClick={sendNewCommentRequest}
+                                        value={commentText}
+                                    />
+                                    <br/><br/><br/>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="row mt-5 ">
-
-                        {isAuth &&
-                            <>
-                                <div className="col-2 offset-8 d-flex justify-content-end">
-                                    <button className="main-large-orange-save-button"
-                                            style={{color: 'white', backgroundColor: 'black'}}>Edit
-                                    </button>
-                                </div>
-                                <div className="col-2 d-flex justify-content-end">
-                                    <button className="main-large-orange-save-button"
-                                            style={{color: 'white', backgroundColor: 'black'}}
-                                            onClick={handleDelete}>Delete
-                                    </button>
-                                </div>
-                            </>
-                        }
                     </div>
                 </div>
             </section>

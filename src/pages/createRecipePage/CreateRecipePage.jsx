@@ -49,7 +49,8 @@ const CreateRecipePage = () => {
     const [type, setType] = useState("");
     const [ingredient, setIngredient] = useState({name: "", value: "", units: ""});
     const [nutrient, setNutrient] = useState({name: "", value: "", units: ""});
-    const [step, setStep] = useState({description: "", stepNumber: null});
+    const [step, setStep] = useState({description: "", stepNumber: 0});
+    const [counter, setCounter] = useState(1);
 
     //Errors states
 
@@ -69,7 +70,6 @@ const CreateRecipePage = () => {
     const [smallImage2Error, setSmallImage2Error] = useState("");
     const [smallImage3Error, setSmallImage3Error] = useState("");
     const [smallImage4Error, setSmallImage4Error] = useState("");
-
 
     const config: ImagePickerConf = {
         borderRadius: '8px',
@@ -116,14 +116,15 @@ const CreateRecipePage = () => {
     }
 
     function handleStepChange(event) {
-        setStep({description: event.target.value, stepNumber: 1})
+        setStep({description: event.target.value, stepNumber: counter})
     }
 
     function handleAddStepClick() {
         if (step.description.trim() !== "") {
-            setSteps(array => [...array, step])
-            setStep({description: "", stepNumber: null})
-            setStepsInputError("")
+            (function () {setCounter(counter + 1);})();
+            (function () {setSteps([...steps, step])})();
+            (function () {setStepsInputError("")})();
+            (function () {setStep({description: "", stepNumber: counter})})();
         }
     }
 
@@ -165,7 +166,7 @@ const CreateRecipePage = () => {
                 setDescriptionInputError("Please, add recipe description.");
             }
             if (steps.length === 0) {
-                setStepsInputError("Please, add at least one cooking step.");
+                setStepsInputError("Please, add at least one step.");
             }
             if (category === "") {
                 setCategoryInputError("Please, select recipe category.");
@@ -223,7 +224,6 @@ const CreateRecipePage = () => {
 
             fetch(url, requestOptions)
                 .then((response) => response.json())
-                .then(data => console.log(data))
                 .catch((err) => {
                     console.log(err.message);
                 });
@@ -268,11 +268,11 @@ const CreateRecipePage = () => {
                     <br/>
                     <br/>
                     <div className="row">
-                        <div className="col-8 offset-2 recipe-title">
-                            <p>Create New Recipe</p>
+                        <div className="col-8 offset-2 recipe-title d-flex justify-content-center">
+                            <p className="mt-auto mb-auto">Create New Recipe</p>
                         </div>
-                        <div className="col-2">
-                            <button className="main-large-orange-save-button" onClick={handleRecipeSubmit}>Save</button>
+                        <div className="col-2 d-flex justify-content-center">
+                            <button className="main-large-orange-save-button mt-auto mb-auto" onClick={handleRecipeSubmit}>Save</button>
                         </div>
                     </div>
                     <br/>
@@ -421,7 +421,7 @@ const CreateRecipePage = () => {
                                 {
                                     ingredientsInputError &&
                                     <div className="row">
-                                        <div className="col-10 offset-2 d-flex">
+                                        <div className="col-xl-12 offset-xl-12 col-xxl-10 offset-xxl-2 d-flex">
                                             <div className="d-flex justify-content-start align-items-center mt-4">
                                                 <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
@@ -469,7 +469,7 @@ const CreateRecipePage = () => {
 
                                 {nutrientsInputError &&
                                     <div className="row">
-                                        <div className="col-10 offset-2 d-flex">
+                                        <div className="col-xl-12 col-xxl-10 offset-xxl-2 d-flex">
                                             <div className="d-flex justify-content-start align-items-center mt-4">
                                                 <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
@@ -497,7 +497,7 @@ const CreateRecipePage = () => {
 
                                 {prepareTimeInputError &&
                                     <div className="row">
-                                        <div className="col-10 offset-2 d-flex">
+                                        <div className="col-xl-12 col-xxl-10 offset-xxl-2 d-flex">
                                             <div className="d-flex justify-content-start align-items-center mt-4">
                                                 <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
@@ -524,7 +524,7 @@ const CreateRecipePage = () => {
                                     }}/>
                                 {cookingTimeInputError &&
                                     <div className="row">
-                                        <div className="col-10 offset-2 d-flex">
+                                        <div className="col-xl-12 col-xxl-10 offset-xxl-2 d-flex">
                                             <div className="d-flex justify-content-start align-items-center mt-4">
                                                 <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
@@ -537,20 +537,20 @@ const CreateRecipePage = () => {
                         </div>
                         <div className="col-md-8 col-12">
                             <div className="row mb-4 d-flex align-items-center">
-                                <div className="col-3">
+                                <div className="col-lg-4 col-md-6">
                                     <NumerationWithTitle title='Add images' number='8'/>
                                 </div>
 
                                 {(mediumImageError || smallImage1Error || smallImage2Error || smallImage3Error || smallImage4Error) &&
-                                    <div className="col-9 d-flex align-items-center">
+                                    <div className="col-lg-8 col-md-6 d-flex align-items-center">
                                         <PiWarningCircle size={20} color="red"/>
                                         <span className="span-error"
                                               style={{marginLeft: '20px'}}>Please, add 5 images.</span>
                                     </div>
                                 }
                             </div>
-                            <div className="row mb-5">
-                                <div className="col-lg-6 col-12">
+                            <div className="row mb-lg-4">
+                                <div className="col-xl-6 col-lg-8 col-12">
                                     <ReactImagePickerEditor
                                         config={config2}
                                         imageSrcProp={initialImage}
@@ -560,9 +560,10 @@ const CreateRecipePage = () => {
                                         }}
                                     />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-lg-4 col-xl-6">
                                     <div className="row mb-4">
-                                        <div className="col-6">
+
+                                        <div className="col-6 col-lg-12 col-xl-6 col-md-4 small-image">
                                             <ReactImagePickerEditor
                                                 config={config}
                                                 imageSrcProp={initialImage}
@@ -572,7 +573,8 @@ const CreateRecipePage = () => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="col-6">
+
+                                        <div className="col-lg-12 col-xl-6 col-md-4 small-image-2">
                                             <ReactImagePickerEditor
                                                 config={config}
                                                 imageSrcProp={initialImage}
@@ -584,7 +586,7 @@ const CreateRecipePage = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-6">
+                                        <div className="col-lg-12 col-xl-6 col-md-4 small-image-2">
                                             <ReactImagePickerEditor
                                                 config={config}
                                                 imageSrcProp={initialImage}
@@ -594,7 +596,7 @@ const CreateRecipePage = () => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="col-6">
+                                        <div className="col-lg-12 col-xl-6 col-md-4 small-image" >
                                             <ReactImagePickerEditor
                                                 config={config}
                                                 imageSrcProp={initialImage}
@@ -607,17 +609,46 @@ const CreateRecipePage = () => {
                                     </div>
                                 </div>
                             </div>
+
+
+
+                            <div className="row hidden-on-large d-xl-none">
+                                <div className="col-4">
+                                    <ReactImagePickerEditor
+                                        config={config}
+                                        imageSrcProp={initialImage}
+                                        imageChanged={(data) => {
+                                            setSmallImage4Error("")
+                                            setSmallImage4(data);
+                                        }}
+                                    />
+                                </div>
+                                <div className="col-4">
+                                    <ReactImagePickerEditor
+                                        config={config}
+                                        imageSrcProp={initialImage}
+                                        imageChanged={(data) => {
+                                            setSmallImage1Error("")
+                                            setSmallImage1(data);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+
+
+
                             <br/>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="row mb-3">
-                                        <div className="col-5 d-flex">
+                                        <div className="col-6 col-xl-6 d-flex">
                                             <NumerationWithTitle title='Add recipe description' number='9'/>
                                         </div>
 
                                         {descriptionInputError &&
-                                            <div className="col-7 d-flex align-items-center">
-                                                <PiWarningCircle size={20} color="red"/>
+                                            <div className="col-6 col-xl-6 d-flex align-items-center">
+                                            <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
                                                       style={{marginLeft: '20px'}}>{descriptionInputError}</span>
                                             </div>
@@ -644,11 +675,11 @@ const CreateRecipePage = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-5 d-flex align-items-center">
+                                        <div className="col-6 d-flex align-items-center">
                                             <NumerationWithTitle title='Add recipe cooking steps' number='10'/>
                                         </div>
                                         {stepsInputError &&
-                                            <div className="col-7 d-flex align-items-center">
+                                            <div className="col-6 d-flex align-items-center">
                                                 <PiWarningCircle size={20} color="red"/>
                                                 <span className="span-error"
                                                       style={{marginLeft: '20px'}}>{stepsInputError}</span>

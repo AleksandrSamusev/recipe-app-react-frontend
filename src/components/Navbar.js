@@ -38,9 +38,7 @@ const Navbar = () => {
                             <li>
                                 <Link to='/dishes' className="navbar-link">Dishes</Link>
                             </li>
-                            <li>
-                                <Link to='/search' className="navbar-link">Search</Link>
-                            </li>
+
                             {isAuth &&
                                 <li>
                                     <Link to='/recipes/create-new-recipe' className="navbar-link">Add Recipe</Link>

@@ -7,6 +7,7 @@ const LeaveComment = (props) => {
             <div className="mb-4 d-flex">
                                                 <textarea id="comment"
                                                           className="new-recipe-textarea"
+                                                          value={props.value}
                                                           name="comment"
                                                           rows="5"
                                                           cols={100}

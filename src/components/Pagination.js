@@ -49,7 +49,10 @@ const Pagination = (props) => {
                                         fontSize: '20px',
                                         color: 'black'
                                     }}
-                            onClick={window.scrollTo(0,0)}>
+                            //onClick={window.scrollTo(0,0)}
+
+
+                            >
                                 {number}
                             </button>
                         </li>

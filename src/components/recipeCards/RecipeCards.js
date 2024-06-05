@@ -67,15 +67,17 @@ const RecipeCards = (props) => {
                         return (
                             <>
                                 <
-                                    RecipeCard id={item.recipeId}
-                                               rating={item.rating}
-                                               title={item.title}
-                                               description={item.description}
-                                               prepareTime={item.prepareTime}
-                                               cookingTime={item.cookingTime}
-                                               imagePath={item.imgMedium}
-                                               category={item.category}
-                                               type={item.type}
+                                    RecipeCard
+                                    key={item.recipeId}
+                                    id={item.recipeId}
+                                    rating={item.rating}
+                                    title={item.title}
+                                    description={item.description}
+                                    prepareTime={item.prepareTime}
+                                    cookingTime={item.cookingTime}
+                                    imagePath={item.imgMedium}
+                                    category={item.category}
+                                    type={item.type}
                                 />
                             </>
 

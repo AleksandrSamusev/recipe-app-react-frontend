@@ -14,7 +14,7 @@ const RecipeCard = (props) => {
     }
 
     function handleRating(value) {
-        //value= value?.toString();
+
         if (value < 0.25) {
             return (<div><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /><StarEmptyLight /></div>)
         } else if (value < 0.5) {
@@ -60,6 +60,15 @@ const RecipeCard = (props) => {
         }
     }
 
+    function getSliceIndex() {
+        for(let i = 120; i>=0; i--) {
+            if(props.description.charAt(i) === " ") {
+                console.log("return index: " + i)
+                return i;
+            }
+        }
+    }
+
     return (
         <>
             <div className="recipe-card col-md-4 col-sm-12 p-md-3 p-lg-4 p-xl-4" onClick={handleClick}>
@@ -67,7 +76,13 @@ const RecipeCard = (props) => {
                 <div className="rating-stars-div">{handleRating(props.rating)}</div>
                 <div className="card-body">
                     <h5 className="recipe-card-title">{props.title}</h5>
-                    <p className="recipe-card-text">{props.description.slice(0, 120) + '...'}</p>
+                    <p className="recipe-card-text">
+                        { props.description.length > 120 ?
+                            props.description.slice(0, getSliceIndex()) + '...'
+                            :
+                            props.description
+                        }
+                    </p>
                     <p className="recipe-card-text">prep. - {props.prepareTime}</p>
                     <p className="recipe-card-text">cooking - {props.cookingTime}</p>
                 </div>
