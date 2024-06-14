@@ -4,6 +4,7 @@ import {useState} from "react";
 import {loginApiCall, saveLoggedInUser, storeToken} from "../../service/AuthService";
 import {useNavigate} from "react-router-dom";
 import {PiWarningCircle} from "react-icons/pi";
+import '../loginPage/LoginPage.css'
 
 const LoginPage = () => {
 
@@ -48,13 +49,16 @@ const LoginPage = () => {
         <>
             <section className="main-page-section">
                 <Navbar/>
-                <br/><br/><br/>
                 <div className="container">
-                    <p className="recipe-title">Login</p>
-                    <br/><br/><br/>
-
-
-                    <div className="row d-flex">
+                    <br/>
+                    <div className="row mt-5 mb-5">
+                        <div className="col-12 text-center">
+                            <span className="loginPageTitle">Login</span>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div className="row">
                         <TitleWithInput
                             name='Email'
                             type='text'

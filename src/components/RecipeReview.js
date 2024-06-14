@@ -5,8 +5,8 @@ const RecipeReview = (props) => {
             <div className="container">
                 <div className="row">
                     <div className="offset-1 col-10">
-                        <div className="row p-2">
-                            <div className="col-12 text-start mb-3">
+                        <div className="row">
+                            <div className="col-12 text-start mb-2">
                                                         <span className="mb-auto mt-auto"
                                                               style={{
                                                                   fontSize: '16px',

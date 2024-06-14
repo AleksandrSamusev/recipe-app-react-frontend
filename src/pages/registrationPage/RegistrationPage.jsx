@@ -5,6 +5,7 @@ import {registerApiCall} from "../../service/AuthService";
 import {useNavigate} from "react-router-dom";
 import ReactImagePickerEditor, {ImagePickerConf} from "react-image-picker-editor";
 import {PiWarningCircle} from "react-icons/pi";
+import '../registrationPage/RegistrationPage.css'
 
 const RegistrationPage = () => {
 
@@ -76,7 +77,8 @@ const RegistrationPage = () => {
         <section className="main-page-section">
             <Navbar/>
             <div className="container">
-                <p className="recipe-title">Sign Up</p>
+                <br/>
+                <p className="registrationPageTitle text-center">Sign Up</p>
                 <br/>
                 <div className="d-flex justify-content-center">
                     <ReactImagePickerEditor

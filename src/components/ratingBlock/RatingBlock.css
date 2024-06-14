@@ -1,0 +1,52 @@
+@media only screen and (min-width: 1200px) {
+
+    .ratingBlock {
+        border-radius: 10px;
+        background-color: #343434;
+        padding-bottom: 15px;
+    }
+
+    .ratingBlockTitle {
+        font-family: 'Antonio', sans-serif;
+        font-size: 40px;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 15px;
+        color: #EFEFEF;
+        font-weight: 400;
+    }
+
+    .ratingBlockSpan {
+        letter-spacing: -1px;
+        font-family: 'Antonio', sans-serif;
+        font-size: 55px;
+        font-weight: 700;
+        color: #EFEFEF;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .ratingBlock {
+        border-radius: 10px;
+        background-color: #343434;
+        padding-bottom: 15px;
+    }
+
+    .ratingBlockTitle {
+        font-family: 'Antonio', sans-serif;
+        font-size: 32px;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 15px;
+        color: #EFEFEF;
+        font-weight: 400;
+    }
+
+    .ratingBlockSpan {
+        letter-spacing: -1px;
+        font-family: 'Antonio', sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        color: #EFEFEF;
+    }
+}

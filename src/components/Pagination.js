@@ -29,12 +29,12 @@ const Pagination = (props) => {
 
     return (
         <nav aria-label="..." className="mt-5 mb-5">
-            <ul className="pagination pagination-lg justify-content-center">
+            <ul className="pagination pagination-md justify-content-center">
                 <li className="page-item" onClick={() => props.paginate(1)}>
                     <button className="page-link"
                             style={{
-                                fontFamily: 'roboto',
-                                fontSize: '20px',
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
                                 color: 'black'
                             }}  >First page</button>
                 </li>
@@ -45,13 +45,10 @@ const Pagination = (props) => {
                         >
                             <button className="page-link"
                                     style={{
-                                        fontFamily: 'roboto',
-                                        fontSize: '20px',
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
                                         color: 'black'
                                     }}
-                            //onClick={window.scrollTo(0,0)}
-
-
                             >
                                 {number}
                             </button>
@@ -60,8 +57,8 @@ const Pagination = (props) => {
                 }
                 <li className="page-item" onClick={() => props.paginate(props.totalPages)}>
                     <button className="page-link" style={{
-                        fontFamily: 'roboto',
-                        fontSize: '20px',
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
                         color: 'black'
                     }}>Last page
                     </button>

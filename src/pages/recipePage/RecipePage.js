@@ -3,10 +3,12 @@ import {FaArrowCircleLeft} from "react-icons/fa";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import {getLoggedInUser, getToken, isUserLoggedIn} from "../../service/AuthService";
-import {RatingBlock} from "../../components/RatingBlock";
+
 import {SetRating} from "../../components/SetRating";
 import {LeaveComment} from "../../components/LeaveComment";
 import {Comments} from "../../components/Comments";
+import {SpinnerLoading} from "../../utils/SpinnerLoading";
+import {RatingBlock} from "../../components/ratingBlock/RatingBlock";
 
 const RecipePage = () => {
 
@@ -22,6 +24,9 @@ const RecipePage = () => {
     const [recipe, setRecipe] = useState(null)
     const [newRating, setNewRating] = useState('');
     const [commentText, setCommentText] = useState('');
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [httpError, setHttpError] = useState(null);
 
     function handleClick() {
         navigator(`/recipes/${category}/${type}`)
@@ -73,15 +78,7 @@ const RecipePage = () => {
     }
 
 
-    const fetchRecipe = async () => {
-        const url = `http://localhost:8080/api/v1/recipes/${recipeId}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Something went wrong!');
-        }
-        const responseJson = await response.json();
-        setRecipe(responseJson);
-    }
+
 
     const handleDelete = async () => {
         const url = `http://localhost:8080/api/v1/recipes/${recipeId}`
@@ -101,11 +98,44 @@ const RecipePage = () => {
     }
 
     useEffect(() => {
-        fetchRecipe();
+        const fetchRecipe = async () => {
+            const url = `http://localhost:8080/api/v1/recipes/${recipeId}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Something went wrong!');
+            }
+            const responseJson = await response.json();
+            setRecipe(responseJson);
+            setIsLoading(false)
+        };
+        fetchRecipe().catch(error => {
+            setIsLoading(false);
+            setHttpError(error.message);
+        })
     }, []);
 
 
+    if(isLoading) {
+        return (
+            <SpinnerLoading/>
+        )
+    }
 
+    if(httpError) {
+        return (
+            <div className="container text-center" style={{marginTop: '25vh'}}>
+                <span style={{
+                    fontSize: '2rem',
+                    fontWeight: 500
+                }}>The server responded with a message --> {httpError}.</span>
+                <br/>
+                <span style={{
+                    fontSize: '2rem',
+                    fontWeight: 500
+                }}>Please try again later :(</span>
+            </div>
+        )
+    }
 
     return (
         <>
@@ -115,69 +145,68 @@ const RecipePage = () => {
 
 
                 <div className="container main-recipe-container">
-                    <br/>
-                    <div className="row mt-5 mb-5">
-                        <div className="col-8 offset-2 recipe-title">
+                    <div className="row mt-5">
+                        <div className="col-10 recipe-title mb-2">
                             <p className="mt-auto mb-auto">{recipe?.title}</p>
                         </div>
                         <div className="col-2 d-flex justify-content-center">
                             {isAuth &&
                                 <>
-                                    <button className="main-large-orange-save-button mb-auto mt-auto"
-                                            style={{color: 'black', backgroundColor: '#FFBA54'}}
+                                    <button className="main-large-orange-post-button mb-auto mt-auto"
                                             onClick={handleDelete}>Delete
                                     </button>
                                 </>
                             }
                         </div>
                     </div>
-                    <br/><br/>
+                    <hr/>
 
-                    <div className="row">
-                        <div className="col-4 ingredients-container"
-                             style={{paddingLeft: '50px', paddingRight: '50px'}}>
+                    <div className="row mt-4">
+                        <div className="col-5 col-xl-4 ingredients-container"
+                             style={{paddingRight: '50px'}}>
                             <RatingBlock rating={recipe?.rating}/>
                             <br/><br/>
 
-                            <span className="description-title">Ingredients:</span>
-                            <ul className="ingredients-list">
+                            <span className="recipe-card-title">Ingredients</span>
+                            <hr/>
+                            <ul className="ingredients-list mt-3">
                                 {recipe?.ingredients?.sort((a, b) => a.name.localeCompare(b.name)).map(ingredient => (
                                     <li key={ingredient.ingredientId}>{ingredient.name}</li>
                                 ))}
                             </ul>
+
                             <br/>
-                            <br/>
-                            <br/>
-                            <span className="description-title">Nutrients:</span>
-                            <ul className="ingredients-list">
+
+
+                            <span className="recipe-card-title">Nutrients</span>
+                            <hr/>
+                            <ul className="ingredients-list mt-3">
                                 {recipe?.nutrients?.sort((a, b) => a.name.localeCompare(b.name)).map(nutrient => (
                                     <li key={nutrient.nutrientId}>{nutrient.name}</li>
                                 ))}
                             </ul>
 
+                           <br/><br/>
 
-                            <br/>
-                            <br/>
-                            <br/>
-                            <span className="description-title">Prepare time:</span>
-                            <ul className="ingredients-list">
+
+                            <span className="recipe-card-title">Prepare time</span>
+                            <hr/>
+                            <ul className="ingredients-list mt-3">
                                 <li key={recipe?.recipeId}>{recipe?.prepareTime}</li>
                             </ul>
 
+                            <br/><br/>
 
-                            <br/>
-                            <br/>
-                            <br/>
-                            <span className="description-title">Cooking time:</span>
-                            <ul className="ingredients-list">
+                            <span className="recipe-card-title">Cooking time</span>
+                            <hr/>
+                            <ul className="ingredients-list mt-3">
                                 <li key={recipe?.recipeId}>{recipe?.cookingTime}</li>
                             </ul>
-
-
                         </div>
-                        <div className="col-md-8 col-12">
+
+                        <div className="col-xl-8 col-7">
                             <div className="row mb-5">
-                                <div className="col-lg-6 col-12">
+                                <div className="col-xl-6 col-12">
                                     <img src={recipe?.imgMedium} alt=""
                                          className="recipe-image"/>
                                 </div>
@@ -206,16 +235,16 @@ const RecipePage = () => {
                             </div>
                             <div className="row">
                                 <div className="col-12">
-                                    <p className="description-title">Description:</p>
-                                    <br/>
-                                    <span className="ingredients-list">
+                                    <p className="recipe-card-title">Description</p>
+                                    <hr/>
+                                    <span className="ingredients-list mt-3">
                                         {recipe?.description}
                                     </span>
                                     <br/>
                                     <br/>
                                     <br/>
                                     <div className="col-12 mt-4 mb-5 ingredients-bottom-container">
-                                        <span className="card-title">Ingredients:</span>
+                                        <span className="card-title">Ingredients</span>
                                         <ol className="ingredients-list">
                                             {recipe?.ingredients?.map(ingredient => (
                                                 <li key={ingredient.ingredientId}>{ingredient.name} - {ingredient.value} {ingredient.units}</li>
@@ -223,16 +252,16 @@ const RecipePage = () => {
                                         </ol>
                                         <br/>
                                         <br/>
-                                        <span className="card-title">Nutrition:</span>
+                                        <span className="card-title">Nutrients</span>
                                         <ol className="ingredients-list">
                                             {recipe?.nutrients?.map(nutrient => (
                                                 <li key={nutrient.nutrientId}>{nutrient.name} - {nutrient.value} {nutrient.units}</li>
                                             ))}
                                         </ol>
                                     </div>
-                                    <span className="card-title">Cooking Steps:</span>
-                                    <br/>
-                                    <ol className="ingredients-list">
+                                    <span className="recipe-card-title">Cooking Steps</span>
+                                    <hr/>
+                                    <ol className="ingredients-list mt-3">
                                         {recipe?.steps?.sort((a, b) => a.stepNumber - b.stepNumber).map(step => (
                                             <li key={step.stepId} className="mb-4">{step.description}</li>
                                         ))}
@@ -252,7 +281,7 @@ const RecipePage = () => {
                                                       style={{fontSize: '30px'}}>Explore related reviews</span>
                                         </div>
                                     </div>
-                                    <br/>
+
                                     {recipe?.comments.length > 0 ?
                                         <Comments recipe={recipe}
                                                   recipeId={recipeId}

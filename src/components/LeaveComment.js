@@ -17,7 +17,7 @@ const LeaveComment = (props) => {
             </div>
             <div className="d-flex justify-content-end">
                 <button
-                    className="main-large-orange-post-button mt-auto mb-auto"
+                        className="main-large-orange-post-button mt-auto mb-auto"
                     style={{marginRight: '20px'}}
                     onClick={props.onClick}
                 >Post

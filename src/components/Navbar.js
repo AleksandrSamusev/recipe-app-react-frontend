@@ -29,40 +29,39 @@ const Navbar = () => {
         <>
             <nav className='top-navbar'>
                 <IoHomeOutline className="home-menu" size={45} onClick={handleHomeClick}/>
-                <div className="row">
-                    <div className="col-8 offset-2">
-                        <ul className="navbar-list">
-                            <li>
-                                <Link to='/' className="navbar-link">Home</Link>
-                            </li>
-                            <li>
-                                <Link to='/dishes' className="navbar-link">Dishes</Link>
-                            </li>
+                <div className="d-flex align-items-center justify-content-center">
 
-                            {isAuth &&
-                                <li>
-                                    <Link to='/recipes/create-new-recipe' className="navbar-link">Add Recipe</Link>
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                    <ul className="navbar-list m-0 p-0">
+                        <li>
+                            <Link to='/' className="navbar-link px-5">Home</Link>
+                        </li>
+                        <li>
+                            <Link to='/dishes' className="navbar-link px-5">Dishes</Link>
+                        </li>
+                        {isAuth &&
+                            <li>
+                                <Link to='/recipes/create-new-recipe' className="navbar-link px-5">Add Recipe</Link>
+                            </li>
+                        }
+                    </ul>
+
                     {!isAuth &&
-                        <div className="col-2">
-                            <ul className="navbar-list">
+                        <div className="d-flex">
+                            <ul className="navbar-list m-0 p-0">
                                 <li>
-                                    <Link to='/login' className="navbar-link">Log In</Link>
+                                    <Link to='/login' className="navbar-link px-5">Log In</Link>
                                 </li>
                                 <li>
-                                    <Link to='/register' className="navbar-link">Sigh Up</Link>
+                                    <Link to='/register' className="navbar-link px-5">Sigh Up</Link>
                                 </li>
                             </ul>
                         </div>
                     }
                     {isAuth &&
-                        <div className="col-2">
-                            <ul className="navbar-list">
+                        <div className="d-flex">
+                            <ul className="navbar-list m-0 p-0">
                                 <li>
-                                    <Link to='/' className="navbar-link" onClick={handleLogout}>Log out</Link>
+                                    <Link to='/' className="navbar-link px-5" onClick={handleLogout}>Log out</Link>
                                 </li>
                             </ul>
                         </div>

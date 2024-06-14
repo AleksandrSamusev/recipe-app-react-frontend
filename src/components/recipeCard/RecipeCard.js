@@ -73,18 +73,19 @@ const RecipeCard = (props) => {
         <>
             <div className="recipe-card col-md-4 col-sm-12 p-md-3 p-lg-4 p-xl-4" onClick={handleClick}>
                 <img src={props.imagePath} className="img-fluid card-image" alt=""/>
-                <div className="rating-stars-div">{handleRating(props.rating)}</div>
                 <div className="card-body">
+                    <div className="rating-stars-div">{handleRating(props.rating)}</div>
                     <h5 className="recipe-card-title">{props.title}</h5>
                     <p className="recipe-card-text">
-                        { props.description.length > 120 ?
+                        {props.description.length > 120 ?
                             props.description.slice(0, getSliceIndex()) + '...'
                             :
                             props.description
                         }
                     </p>
-                    <p className="recipe-card-text">prep. - {props.prepareTime}</p>
-                    <p className="recipe-card-text">cooking - {props.cookingTime}</p>
+                    <hr/>
+                    <p className="recipe-card-text-2 mb-0">prep. - {props.prepareTime}</p>
+                    <p className="recipe-card-text-2">cooking - {props.cookingTime}</p>
                 </div>
             </div>
         </>
