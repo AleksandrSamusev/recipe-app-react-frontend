@@ -1,0 +1,71 @@
+const Pagination = (props) => {
+
+    const pageNumbers = [];
+    if (props.currentPage === 1) {
+        pageNumbers.push(props.currentPage);
+        if (props.totalPages >= props.currentPage + 1) {
+            pageNumbers.push(props.currentPage + 1);
+        }
+        if (props.totalPages >= props.currentPage + 2) {
+            pageNumbers.push(props.currentPage + 2);
+        }
+    } else if (props.currentPage > 1) {
+        if (props.currentPage >= 3) {
+            pageNumbers.push(props.currentPage - 2);
+            pageNumbers.push(props.currentPage - 1);
+        } else {
+            pageNumbers.push(props.currentPage - 1);
+        }
+
+        pageNumbers.push(props.currentPage);
+
+        if (props.totalPages >= props.currentPage + 1) {
+            pageNumbers.push(props.currentPage + 1);
+        }
+        if (props.totalPages >= props.currentPage + 2) {
+            pageNumbers.push(props.currentPage + 2);
+        }
+    }
+
+    return (
+        <nav aria-label="..." className="mt-5 mb-5">
+            <ul className="pagination pagination-md justify-content-center">
+                <li className="page-item" onClick={() => props.paginate(1)}>
+                    <button className="page-link"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '16px',
+                                color: 'black'
+                            }}  >First page</button>
+                </li>
+                {
+                    pageNumbers.map(number => (
+                        <li key={number} onClick={() => props.paginate(number)}
+                            className={'page-item ' + (props.currentPage === number ? 'active' : '')}
+                        >
+                            <button className="page-link"
+                                    style={{
+                                        fontFamily: 'Roboto',
+                                        fontSize: '16px',
+                                        color: 'black'
+                                    }}
+                            >
+                                {number}
+                            </button>
+                        </li>
+                    ))
+                }
+                <li className="page-item" onClick={() => props.paginate(props.totalPages)}>
+                    <button className="page-link" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '16px',
+                        color: 'black'
+                    }}>Last page
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    );
+}
+
+export {Pagination}
