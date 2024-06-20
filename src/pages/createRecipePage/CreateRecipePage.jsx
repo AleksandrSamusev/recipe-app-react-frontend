@@ -48,8 +48,8 @@ const CreateRecipePage = () => {
     const [category, setCategory] = useState("");
     const [steps, setSteps] = useState([]);
     const [type, setType] = useState("");
-    const [ingredient, setIngredient] = useState({name: "", value: "", units: ""});
-    const [nutrient, setNutrient] = useState({name: "", value: "", units: ""});
+    const [ingredient, setIngredient] = useState({name: ""});
+    const [nutrient, setNutrient] = useState({name: ""});
     const [step, setStep] = useState({description: "", stepNumber: 0});
     const [counter, setCounter] = useState(1);
 
@@ -94,25 +94,25 @@ const CreateRecipePage = () => {
     const initialImageSmall = 'data:image/jpeg;base64,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/wB8n/Gr2jfD7w74evlvNN0i1s7lQVEsafMAeuDXRUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABWP4vTSZPDOpf26sb6OsJa6WTO0oOT0+lbFUda0Wy8RaZPp2o263dlOAJIXztYAgjOPcCgD5s1+3PiLw3rHjSa3j07Sr240+2t7EEblsY5lxJIB0z8v4fhVnW5oW+IN7cLJEdD/AOEy07e6keVvFu24kjjrjPvivbdK+FXhLRIbyKy0G0givIvJuE2lllTOdpBJ4zVqH4e+G7fw7JoSaNaLpEjbntPLyjNnO4++e/XigDkvgkkdxpXjEwtiym8R3xt2ibA8slQChHbOelcp8G/FGp678RNU0i/8Ty6laaKsyWS5I+3qZSplc9H2cL6c8dM17Rpvh/TtG0hNLsbSO009EKLBCNqgHOenrk81R0/wF4f0u402ez0qC2m05HjtZIwQY1bO4ZzyDk9c9aAPP/jNdae2pDRNLsbe48XeILQ2TXMvS3tM/M7k9ADnHuPavOvGVjaaHpvxL0ppVkuYbbRLewaQjfKiJGoKevIJ496978Q/C/wr4s1E3+r6Lb394VCedLuztHQcGppvh34auLvTLqXRbSS402NIrSVo8tEifcUHuB2z0oA8J1x0VfE1vIyDXm8Z2bRxsR5pXCbCB6Y39O2a9I+NWqX9nfeDrOz1ubQYtQ1E21xdQuFOwp78fTPQ4NdrceCdBuvEUWvTaVayaxEAEvGjHmDAwDn1A79axfiJ8P8A/hOr/wANtKLaWx0+8aa6t7kEiWMoVKgYPPPegDx7WfHHiDw/4Rv7618TTX93oOvyWFq0h3jUoSoJRwvDsuSd3sfavbvhi7TeA9GuH1STWZbiBZpL2RyxdmGTjPQA8Y7YqxY/D3w5pq6etto9tCunl2tVVeImcYZgO5I7nmtDQvD+n+GdPWx0u1Sys1ZnWGPO1STk4HbmgDRooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9k='
 
     function handleIngredientChange(event) {
-        setIngredient({name: event.target.value, value: "", units: ""})
+        setIngredient({name: event.target.value})
     }
 
     function handleAddIngredientClick() {
         if (ingredient.name.trim() !== "") {
             setIngredients(array => [...array, ingredient])
-            setIngredient({name: "", value: "", units: ""})
+            setIngredient({name: ""})
             setIngredientsInputError("");
         }
     }
 
     function handleNutrientChange(event) {
-        setNutrient({name: event.target.value, value: "", units: ""})
+        setNutrient({name: event.target.value})
     }
 
     function handleAddNutrientClick() {
         if (nutrient.name.trim() !== "") {
             setNutrients(array => [...array, nutrient])
-            setNutrient({name: "", value: "", units: ""})
+            setNutrient({name: ""})
             setNutrientsInputError("");
         }
     }
@@ -211,7 +211,6 @@ const CreateRecipePage = () => {
                     "rating": 0,
                     "prepareTime": prepareTime,
                     "cookingTime": cookingTime,
-                    "imgLarge": mediumImage,
                     "imgMedium": mediumImage,
                     "imgSmall1": smallImage1,
                     "imgSmall2": smallImage2,
