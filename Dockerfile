@@ -1,4 +1,6 @@
-FROM node:alpine
+FROM node:current-alpine3.14
+
+MAINTAINER alex.samusev.81@gmail.com
 
 WORKDIR /app
 
